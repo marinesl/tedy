@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>TEDy - {% block title %}{% endblock %}</title>
+        <link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap.min.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/style_educateur.css') }}">
+        {% block stylesheets %}{% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body {% block bodyclass %}{% endblock %}>
+        <div class="container-fluid">
+            <header class="row">
+                <div class="bleu">
+                    <img src="{{ asset('img/logo/logo150x150.png') }}" alt="logo" class="logo img-responsive" />
+                </div>
+                <div class="bleuclair">
+
+                  <nav class="navbar">
+                    <div class="container-fluid">
+                      <!-- Brand and toggle get grouped for better mobile display -->
+                      <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                          <span class="sr-only">Toggle navigation</span>
+                          <span class="icon-bar"></span>
+                          <span class="icon-bar"></span>
+                          <span class="icon-bar"></span>
+                        </button>
+                      </div>
+
+                      <!-- Collect the nav links, forms, and other content for toggling -->
+                      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav col-sm-12">
+                          <li class="col-sm-2 col-sm-offset-1"><a href="{{ path('educateur_homepage') }}">Tableau de bord</a></li>
+                          <li class="col-sm-2">
+                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Séquences / étapes <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                              <li>
+                                <a href="{{ path('educateur_creer_sequence') }}">Créer une séquence</a>
+                              </li>
+                              <li>
+                                <a href="{{ path('educateur_creer_etape') }}">Créer une étape</a>
+                              </li>
+                            </ul>
+                          </li>
+                          <li class="dropdown col-sm-2 col-sm-offset-2">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Enfants <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                              {{ render(controller(
+                                  'EducateurBundle:Default:menu'
+                              )) }}
+                            </ul>
+                          </li>
+                          <li class="col-sm-2"><a href="{{ path('educateur_compte') }}">Mon compte</a></li>
+                        </ul>
+                      </div><!-- /.navbar-collapse -->
+                    </div><!-- /.container-fluid -->
+                  </nav>
+
+
+                </div>
+            </header>
+
+            {% block body %}{% endblock %}
+        </div>
+
+        <script type="text/javascript" src="{{asset('js/jquery-1.12.4.min.js')}}"></script>
+        <script type="text/javascript" src="{{asset('js/bootstrap.min.js')}}"></script>
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

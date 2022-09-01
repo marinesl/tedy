@@ -1,0 +1,107 @@
+{% extends 'enfantBase.html.twig' %}
+
+{% block title %}
+	Planning En Cours
+{% endblock title %}
+
+{% block bodyclass %}
+	class="page-planningencours"
+{% endblock bodyclass %}
+
+{% block body %}
+	{% if firstVisit %}
+		<div id="fondNoir"></div>
+        <video src="{{asset('img/tuto/TutoEnfantPlanning.mp4')}}" id="tutoriel" class="img-responsive" alt="tutoriel" preload controls autoplay> </video>
+        <button class="btn btn-danger" id="btnCloseVideo" onclick="closeVideo();">Fermer la video</button>
+    {% endif %}
+	<div class="row dropzone">
+		<div class="col-md-12 corbeille thiner">
+			<img src="{{ asset('img/planning/waste-bin24.png') }}" alt="corbeille" class="img-corbeille img-responsive" />
+		</div>
+	</div>
+	
+	<div class="row temps">
+		<span class="temps" id="heure">00</span><span class="temps">:</span><span class="temps" id="minute">00</span><span class="temps">:</span><span class="temps" id="seconde">00</span>
+		<div class="images">
+			<img src="{{ asset('img/planning/play-button64.png') }}" alt="play" class="image play img-responsive" id="play" />
+			<img src="{{ asset('img/planning/pause64.png') }}" alt="pause" class="image pause img-responsive" id="pause" style="display:none;" /><img src="{{ asset('img/planning/stop64.png') }}" alt="stop" class="image stop img-responsive" id="stop" />
+		</div>
+	</div>
+
+	<div class="row musique">
+		<audio src="{{ asset('music/') }}{{planning.sequence.musique}}" controls loop preload="auto"></audio>
+	</div>
+
+	<div class="row duree">
+		La durée de ton planning précédent : <span>{{planning.duree}}</span>.
+	</div>
+
+	{% for e in planning.sequence.etapes %}
+		{% if loop.first %}
+			<div class="row etapes draggable">
+				<div class="col-md-offset-1 col-md-8 etape">
+					<div class="row">
+						<div class="col-md-1 col-color-first">
+						</div>
+						<div class="col-md-1 blanc-first">
+						</div>
+						<div class="col-md-3 blanc-first">
+							<img src="{{ asset('img/etape/') }}{{e.image}}" alt="etape" width="120" height="120" class="img-etape img-responsive" />
+						</div>
+						<div class="col-md-7 blanc-first">
+							<h3>{{e.libelle}}</h3>
+						</div>
+					</div>
+				</div> <!-- div class="etape" -->
+			</div> <!-- div class="etapes" -->
+		{% else %}
+			<div class="row etapes">
+				<div class="col-md-offset-2 col-md-6 etape">
+					<div class="row">
+						<div class="col-md-1 col-color">
+						</div>
+						<div class="col-md-1 blanc">
+						</div>
+						<div class="col-md-3 blanc">
+							<img src="{{ asset('img/etape/') }}{{e.image}}" alt="etape" width="100" height="100" class="img-etape img-responsive" />
+						</div>
+						<div class="col-md-7 blanc">
+							<h3>{{e.libelle}}</h3>
+						</div>
+					</div>
+				</div> <!-- div class="etape" -->
+			</div> <!-- div class="etapes" -->
+		{% endif %}
+	{% endfor %}
+
+	<div class="row message-ko">
+		<span>Bravo ! Tu as fini ton planning ! ;-)</span>
+		<br />
+		<span id="message-duree"></span>
+		<br />
+		{{form(form)}}
+		<br />
+		<img src="{{ asset('img/planning/teddyBear200.png') }}" alt="teddyBear" class="img-responsive" />
+	</div>
+{% endblock body %}
+
+{% block javascripts %}
+	<script type="text/javascript" src="{{ asset('js/chrono.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('js/interact.min.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('js/draganddrop_planning.js') }}"></script>
+	<script type="text/javascript">
+		ancienneDuree = "{{planning.duree}}";
+
+		{% if firstVisit %}
+            var video = document.getElementById('tutoriel');
+            var btnCloseVideo = document.getElementById('btnCloseVideo');
+            var fondNoir = document.getElementById('fondNoir');
+
+            function closeVideo(e){
+                video.setAttribute('class', 'hidden');
+                btnCloseVideo.setAttribute('class', 'hidden');
+                fondNoir.setAttribute('class', 'hidden');
+            }
+        {% endif %}
+	</script>
+{% endblock javascripts %}

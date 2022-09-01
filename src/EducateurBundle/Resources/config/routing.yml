@@ -1,0 +1,44 @@
+educateur_homepage:
+    path:     /
+    defaults: { _controller: EducateurBundle:Default:index }
+
+educateur_compte:
+    path:     /mon-compte
+    defaults: { _controller: EducateurBundle:Default:compte }
+
+educateur_enfant_ajout:
+    path:     /ajout-enfant
+    defaults: { _controller: EducateurBundle:Default:ajoutEnfant }
+
+educateur_enfant_supprimer:
+    path:     /supprimer-enfant/{id}
+    defaults: { _controller: EducateurBundle:Default:supprimerEnfant }
+
+
+educateur_creer_sequence:
+    path:     /creer-sequence
+    defaults: { _controller: EducateurBundle:Default:creerSequence }
+
+educateur_creer_etape:
+    path:     /creer-etape
+    defaults: { _controller: EducateurBundle:Default:creerEtape }
+
+educateur_fiche_enfant:
+    path:     /enfant/{username}-{name}
+    defaults: { _controller: EducateurBundle:Default:ficheEnfant }
+
+educateur_creer_contrat:
+    path:     /enfant/{username}-{name}/creer-contrat
+    defaults: { _controller: EducateurBundle:Default:creerContrat }
+
+educateur_supprimer_contrat:
+    path:     /supprimer-contrat/{id}
+    defaults: { _controller: EducateurBundle:Default:supprimerContrat }
+
+educateur_enfant_modif:
+    path:     /enfant/{username}-{name}/modif-enfant
+    defaults: { _controller: EducateurBundle:Default:modifEnfant }
+
+educateur_inviter:
+    path:     /enfant/{username}-{name}/inviter
+    defaults: { _controller: EducateurBundle:Default:inviter }

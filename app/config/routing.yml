@@ -1,0 +1,26 @@
+homepage:
+    defaults: { _controller: AppBundle:Default:index }
+    path: /
+
+sequence:
+    resource: "@SequenceBundle/Resources/config/routing.yml"
+    prefix:   /sequence
+
+user:
+    resource: "@UserBundle/Resources/config/routing.yml"
+    prefix:   /user
+
+enfant:
+    resource: "@EnfantBundle/Resources/config/routing.yml"
+    prefix:   /enfant
+
+educateur:
+    resource: "@EducateurBundle/Resources/config/routing.yml"
+    prefix:   /educateur
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
+
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"

@@ -1,0 +1,196 @@
+{% extends 'enfantBase.html.twig' %}
+
+{% block title %} Ajout d'un planning {% endblock %}
+
+{% block bodyclass %} class="page-creer-planning" {% endblock %}
+
+{% block body %}
+
+{% if message is defined %}
+	<div id="message">
+		{{message}}
+	</div>
+{% endif %}
+
+    <div class="row">
+	    <h1 class="titre-page col-md-12 col-sm-12">Crée ton planning</h1>
+	</div>
+
+    <div class="row">
+    	<div class="col-md-6 col-sm-12 col-xs-12">
+				{{ form_start(form, {'attr': {'class': 'form-ajout-seq'}}) }}
+	    		<div class="form-group">
+						<div class="row">
+							{{ form_label(form.libelle,"Titre", {'label_attr': {'class': 'col-md-4 col-sm-4 control-label form-required'}}) }}
+							<div class="col-md-6 col-sm-6">
+								{{ form_widget(form.libelle, {'attr': {'class': 'form-control form-ajout-seq-input', 'required' :'required'}}) }}
+							</div>
+						</div>
+
+						<div class="row">
+							{{ form_label(form.description,"Description", {'label_attr': {'class': 'col-md-4 col-sm-4 control-label form-required', 'type': 'TextareaType'}}) }}
+							<div class="col-md-6 col-sm-6">
+								{{ form_widget(form.description, {'attr': {'class': 'form-control form-ajout-seq-input', 'required' :'required'}}) }}
+							</div>
+						</div>
+					</div>
+
+					<div class="form-ajout-seq-bouton">
+            {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}, 'label': 'Enregistrer'}) }}
+          </div>
+				{{ form_end(form) }}
+	    </div>
+
+	    <div id="dropzone" class="col-md-6 col-sm-12 col-xs-12">
+	    	
+	    </div>
+    </div>
+
+		<div class="row">
+			<h3 class="troisieme-titre-page col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
+				Clique sur une étape pour l'ajouter à ton planning !
+			</h3>
+		</div>
+
+	<div class="row">
+        <div class="col-md-10 col-md-offset-1">
+		    <div class="row" id="list-etapes">
+			    {% for etape in etapes %}
+			    	<div class="col-md-2 col-sm-4 col-xs-6 case-etape">
+			    		<div class="etape">
+			    			<img src="{{ asset('img/etape/') }}{{ etape.image }}" data-src="{{ etape.image }}"
+								data-origin-id="{{loop.index}}" class="photo-etape img-responsive">
+				    		<p>{{ etape.libelle }}</p>
+				    		<div class="indicateurPosition"></div>
+				    	</div>
+			    	</div>
+			    {% endfor %}
+			</div>
+		</div>
+	</div>
+{% endblock body %}
+
+{% block javascripts %}
+	<script type="text/javascript">
+		var etapes = document.getElementsByClassName("etape");
+		var dropzone = document.getElementById("dropzone");
+		var position = 0;
+
+		function handleAddEtape(e){
+			var image = this.firstChild.nextElementSibling;
+			var clone = image.cloneNode(true);
+			var id = image.getAttribute('data-origin-id');
+			var p = image.nextElementSibling.innerHTML;
+			var indicateurPosition = this.lastChild.previousElementSibling;
+			var imageSrc = image.getAttribute('data-src');
+			var formSave = document.getElementById('form_save');
+			clone.setAttribute('data-new-id', id);
+			clone.setAttribute('data-position', ++position);
+			clone.setAttribute('class', 'img-responsive in-list pull-left');
+			clone.addEventListener('click', handleRemoveEtape, false);
+			dropzone.appendChild(clone);
+			this.className = 'etape selected';
+			indicateurPosition.setAttribute('class', 'indicateurPosition shown');
+			indicateurPosition.innerHTML = position;
+			this.removeEventListener('click', handleAddEtape);
+			this.addEventListener('click', handleRemoveInListEtape, false);
+
+			var inputLibelle = document.getElementById("form_libelleEtape"+(id-1));
+			var inputImage = document.getElementById("form_imageEtape"+(id-1));
+			var inputPosition = document.getElementById("form_positionEtape"+(id-1));
+			inputLibelle.setAttribute('value', p);
+			inputImage.setAttribute('value', imageSrc);
+			inputPosition.setAttribute('value', position);
+
+			formSave.removeAttribute('disabled');
+		}
+
+		function handleRemoveEtape(e){
+			dropzone.removeChild(this);
+			var newId = this.getAttribute('data-new-id');
+			var origin = document.querySelector('[data-origin-id="'+newId+'"]');
+			origin.parentNode.className = 'etape';
+			origin.parentNode.lastChild.previousElementSibling.className = 'indicateurPosition';
+			origin.parentNode.addEventListener('click', handleAddEtape, false);
+			origin.parentNode.removeEventListener('click', handleRemoveInListEtape);
+			origin.parentNode.removeEventListener('click', handleRemoveEtape);
+
+			var etapesSelected = document.getElementsByClassName('in-list');
+			var oldPosition = this.getAttribute('data-position');
+			[].forEach.call(etapesSelected, function(etape) {
+				if(parseInt(etape.getAttribute('data-position')) > oldPosition)
+					etape.setAttribute('data-position', etape.getAttribute('data-position')-1);
+			});
+			position--;
+			var etapesSelectedOrigin = document.getElementsByClassName('selected');
+			[].forEach.call(etapesSelectedOrigin, function(etape) {
+				if(parseInt(etape.lastChild.previousElementSibling.innerHTML) > oldPosition)
+					etape.lastChild.previousElementSibling.innerHTML = etape.lastChild.previousElementSibling.innerHTML - 1;
+			});
+
+
+			var inputLibelle = document.getElementById("form_libelleEtape"+(newId-1));
+			var inputImage = document.getElementById("form_imageEtape"+(newId-1));
+			var inputPosition = document.getElementById("form_positionEtape"+(newId-1));
+			inputLibelle.setAttribute('value', '');
+			inputImage.setAttribute('value', '');
+			inputPosition.setAttribute('value', null);
+
+			var inputs = document.getElementsByClassName('inputPosition');
+			[].forEach.call(inputs, function(input) {
+				var newPosition = input.getAttribute('value') - 1;
+				if(input.getAttribute('value') > oldPosition)
+					input.setAttribute('value', newPosition);
+			});
+		}
+
+		function handleRemoveInListEtape(e){
+			var origin = this.firstChild.nextElementSibling;
+			origin.parentNode.lastChild.previousElementSibling.className = 'indicateurPosition';
+			var originId = origin.getAttribute('data-origin-id');
+			var etapesInList = document.getElementsByClassName('in-list');
+			[].forEach.call(etapesInList, function(etapeRemoved) {
+				if(etapeRemoved.getAttribute('data-new-id') == originId){
+					dropzone.removeChild(etapeRemoved);
+					oldPosition = etapeRemoved.getAttribute('data-position');
+				}
+			});
+			[].forEach.call(etapesInList, function(etape) {
+				if(parseInt(etape.attributes[5].nodeValue) > oldPosition){
+					etape.setAttribute('data-position', etape.getAttribute('data-position')-1);
+				}
+			});
+			position--;
+
+			var inputLibelle = document.getElementById("form_libelleEtape"+(originId-1));
+			var inputImage = document.getElementById("form_imageEtape"+(originId-1));
+			var inputPosition = document.getElementById("form_positionEtape"+(originId-1));
+			inputLibelle.setAttribute('value', '');
+			inputImage.setAttribute('value', '');
+			inputPosition.setAttribute('value', null);
+
+			var inputs = document.getElementsByClassName('inputPosition');
+			[].forEach.call(inputs, function(input) {
+				var x = input.getAttribute('value');
+				var newPosition = x - 1;
+				if(parseInt(input.getAttribute('value')) > oldPosition)
+					input.setAttribute('value', newPosition);
+			});
+
+			this.className = 'etape';
+			this.addEventListener('click', handleAddEtape, false);
+			this.removeEventListener('click', handleRemoveInListEtape);
+			this.removeEventListener('click', handleRemoveEtape);
+
+			var etapesSelectedOrigin = document.getElementsByClassName('selected');
+			[].forEach.call(etapesSelectedOrigin, function(etape) {
+				if(parseInt(etape.lastChild.previousElementSibling.innerHTML) > oldPosition)
+					etape.lastChild.previousElementSibling.innerHTML = etape.lastChild.previousElementSibling.innerHTML - 1;
+			});
+		}
+
+		[].forEach.call(etapes, function(etape) {
+			etape.addEventListener('click', handleAddEtape, false);
+		});
+	</script>
+{% endblock %}

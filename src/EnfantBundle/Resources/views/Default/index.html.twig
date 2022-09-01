@@ -1,0 +1,72 @@
+{% extends 'enfantBase.html.twig' %}
+
+{% block title %} 
+    Bonjour {{user}} 
+{% endblock title %}
+
+{% block bodyclass %} 
+    class="page-index" 
+{% endblock bodyclass %}
+
+{% block hidden %} 
+    hidden 
+{% endblock hidden %}
+
+{% block body %}
+    {% if firstVisit %}
+        <div id="fondNoir"></div>
+        <video src="{{asset('img/tuto/TutoEnfantAccueil.mp4')}}" id="tutoriel" class="img-responsive" alt="tutoriel" preload controls autoplay> </video>
+        <button class="btn btn-danger" id="btnCloseVideo" onclick="closeVideo();">Fermer la video</button>
+    {% endif %}
+    <a href="{{ path('enfant_calendrier') }}">
+        <div class="row calendrier">
+            <div class="col-md-4 col-md-offset-2 col-xs-4 col-xs-offset-2">
+                <img src="{{ asset('img/index/calendar130x130.png') }}" alt="calendar" class="calendar img-responsive" />
+            </div>
+            <div class="col-md-4 col-xs-4">
+        	   <h1>Calendrier</h1>
+            </div>
+        </div>
+    </a>
+    <a href="{{ path('enfant_contrat') }}">
+        <div class="row contrat">
+            <div class="col-md-4 col-md-offset-2 col-xs-4 col-xs-offset-2">
+        	   <img src="{{ asset('img/index/trophy130x130.png') }}" alt="cubes" class="cubes img-responsive" />
+            </div>
+            <div class="col-md-4 col-xs-4">
+            	<h1>Contrat</h1>
+            </div>
+            {% if contrat %}
+                <div class="col-md-2 col-xs-2">
+                    <img src="{{ asset('img/index/exclamation-sign.png') }}" class="exclamation">
+                </div>
+            {% endif %}
+        </div>
+    </a>
+    <a href="{{ path('enfant_planning') }}">
+        <div class="row planning">
+            <div class="col-md-4 col-md-offset-2 col-xs-4 col-xs-offset-2">       	
+        	   <img src="{{ asset('img/index/list130x130.png') }}" alt="list" class="list img-responsive" />
+            </div>
+            <div class="col-md-4 col-xs-4">
+        	   <h1>Planning</h1>
+            </div>
+        </div>
+    </a>
+{% endblock body %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        {% if firstVisit %}
+            var video = document.getElementById('tutoriel');
+            var btnCloseVideo = document.getElementById('btnCloseVideo');
+            var fondNoir = document.getElementById('fondNoir');
+
+            function closeVideo(e){
+                video.setAttribute('class', 'hidden');
+                btnCloseVideo.setAttribute('class', 'hidden');
+                fondNoir.setAttribute('class', 'hidden');
+            }
+        {% endif %}
+    </script>
+{% endblock %}

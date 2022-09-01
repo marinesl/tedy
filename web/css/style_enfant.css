@@ -1,0 +1,721 @@
+/*style_enfant.css*/
+
+@font-face {
+  	font-family: "Andika";
+  	src: url("../font/AndBasR.ttf");
+}
+
+body{
+	font-family: Andika;
+	margin: 0;
+}
+
+h1, h2 {
+    color: #ffa527;
+}
+
+#message{
+  text-align: center;
+  background-color: #76ad3a;
+  border-radius: 2px;
+  color: white;
+  margin: 15px auto;
+  font-size: 18px;
+  width: 50%;
+}
+
+#tutoriel{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	z-index: 998;
+}
+
+#btnCloseVideo{
+	position: absolute;
+	top: 5vh;
+	left:5vh;
+	z-index: 999;
+}
+
+#fondNoir{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	z-index: 997;
+	opacity: 0.9;
+	background-color: #010101;
+	top: 0px;
+	left: 0px;
+}
+
+
+
+
+
+
+
+/*** HEADER ***/
+
+body.page-planning,
+body.page-contrat,
+body.page-calendrier,
+body.page-login,
+body.page-planningencours {
+	overflow-x: hidden;
+}
+
+.bleu {
+	background-color: #3a405a;
+	height: 20vh;
+}
+
+.bleuclair {
+	background-color: #6f7aa9;
+	height: 5vh;
+}
+
+img.logo {
+	height: 25vh;
+	margin: 0px auto;
+}
+
+.user-present {
+  text-align: center;
+  font-size: 1.2em;
+  margin-top: 10px;
+  margin-left: 10px;
+  background-color: rgb(230,230,230);
+  padding: 5px;
+  border-radius: 5px;
+  min-width: 150px;
+}
+
+
+
+
+
+
+/*** index.html.twig ***/
+
+body.page-index {
+	overflow: hidden;
+}
+
+.page-index div .header {
+	background-color: #3a405a;
+	height: 25vh;
+}
+
+.page-index div .calendrier {
+	background-color: #6f7aa9;
+	height: 25vh;
+}
+
+.page-index div .calendrier h1 {
+	color: white;
+    font-size: 10vh;
+    text-align: center;
+   	margin-top: 7vh;
+}
+
+.page-index img.calendar,
+.page-index img.cubes,
+.page-index img.list {
+	height: 18vh;
+	margin: 3vh auto 0px auto;
+}
+
+.page-index div .contrat {
+	background-color: white;
+	height: 25vh;
+}
+
+.page-index div .contrat h1 {
+	color: #ffa527;
+    font-size: 10vh;
+    text-align: center;
+   	margin-top: 7vh;
+}
+
+.page-index div .planning {
+	background-color: #ffa527;
+	height: 25vh;
+}
+
+.page-index div .planning h1 {
+	color: #3a405a;
+    font-size: 10vh;
+    text-align: center;
+   	margin-top: 7vh;
+}
+
+.page-index .exclamation{
+	height: 13vh;
+	margin-top: 6vh;
+}
+
+
+
+
+
+/*** calendrier.html.twig ***/
+
+.page-calendrier a.accueil {
+	text-decoration: none;
+	color: #3a405a;
+	font-size: 20px;
+}
+
+.imageEtape img {
+    max-width: 100px;
+    margin: 0px auto;
+}
+
+.nomEtape {
+    text-align: center;
+    font-size: 18px;
+}
+
+.fc-content{
+	cursor: pointer;
+}
+
+
+
+
+
+
+/*** login.html.twig ***/
+
+.erreur {
+  margin: 20px auto 0px;
+  width: 50%;
+  color: red;
+  font-size: 1.4em;
+  text-align: center;
+}
+
+.page-login form {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.page-login input {
+	outline-style: none;
+}
+
+.page-login input[type="text"],
+.page-login input[type="password"] {
+	width: 40%;
+	border-radius: 6px;
+	padding-bottom: 2%;
+}
+
+.page-login label, .page-login input {
+    font-size: 20px;
+}
+
+.page-login label[for="password"] {
+	padding-top: 3%;
+}
+
+.page-login label[for="remember_me"] {
+	padding-top: 3%;
+	font-size: 15px;
+}
+
+.page-login .row.button {
+	padding-top: 3%;
+}
+
+.page-login .btn {
+	background-color: #3a405a;
+	color: white;
+	border-radius: 6px;
+	padding-left: 12%;
+    padding-right: 12%;
+    font-size: 20px;
+}
+
+.page-login .inscription {
+	color: #3a405a;
+  display: block;
+  text-align: center;
+  font-size: 1.2em;
+}
+
+
+
+
+
+
+/*** planning.html.twig ***/
+
+.page-planning a.fleche {
+	text-decoration: none;
+	color: #3a405a;
+	font-size: 20px;
+}
+
+.page-planning div.accueil a.ajoute {
+	text-decoration: none;
+	color: #3a405a;
+}
+
+.page-planning div.accueil a.ajoute .btn.ajoute {
+	font-size: 20px;
+	background-color : #ffa527;
+}
+
+.page-planning div.accueil .button-ajout {
+	margin-top: 20px;
+	text-align: center;
+}
+
+.page-planning div.accueil a img {
+	vertical-align: middle;
+	padding-right: 3px;
+}
+
+.page-planning h1 {
+	text-align: center;
+	color: #3a405a;
+}
+
+/*.page-planning div.plannings {
+	margin-left: 10%;
+	margin-top: 1%
+}*/
+
+.page-planning div.plannings a {
+	text-decoration: none;
+	color: #3a405a;
+}
+
+.page-planning div.planning {
+	border: 1px solid black;
+	background-color: #e0e3f4;
+	/*margin: 1%;*/
+	min-height: 270px;
+	margin-top: 30px;
+}
+
+.page-planning div.libelle {
+	text-align: center;
+}
+
+.page-planning div.images img{
+	margin: 0px auto;
+}
+
+
+
+
+
+
+
+/*** planningencours.html.twig ***/
+
+.page-planningencours div.temps {
+	width: auto;
+	position: absolute;
+	right: 6%;
+}
+
+.page-planningencours .musique {
+	position: absolute;
+	right: 2%;
+    top: 56%;
+}
+
+.page-planningencours .duree {
+	position: absolute;
+	right: 2%;
+    top: 65%;
+}
+
+.page-planningencours .duree span {
+	color: #3a405a;
+	font-size: 16px;
+    font-weight: 600;
+}
+
+.page-planningencours span.temps {
+	color: #ffa527;
+	font-size: 30px;
+}
+
+.page-planningencours span.temps:nth-child(1) {
+	padding-left: 6%;
+}
+
+.page-planningencours div.images {
+	padding-top: 10%;
+	padding-bottom: 2%;
+	display: flex;
+}
+
+.page-planningencours .image.play,
+.page-planningencours .image.stop {
+	cursor: pointer;
+}
+
+.page-planningencours .image.stop {
+	margin-left: 15%;
+}
+
+.page-planningencours div.dropzone.drop-target {
+	opacity: 0.5;
+}
+
+.page-planningencours div.corbeille.thiner {
+	background-color: red;
+	height: 5vh;
+	padding-top: 3px;
+	padding-left: 49%;
+	transition: 0.3s;
+}
+
+.page-planningencours div.corbeille.bigger {
+	background-color: red;
+	height: 10vh;
+	padding-top: 12px;
+	padding-left: 49%;
+	transition: 0.3s;
+}
+
+.page-planningencours div.etapes {
+	margin-top: 3%;
+}
+
+.page-planningencours div.etape {
+	border: 1px solid black;
+	margin-bottom: 1%;
+}
+
+.page-planningencours div.col-color {
+	background-color: #6f7aa9;
+	width: 4vw;
+    height: 20vh;
+}
+
+.page-planningencours div.col-color-first {
+	background-color: #ffa527;
+	width: 5vw;
+    height: 25vh;
+    transition: 1s;
+}
+
+.page-planningencours div.etapes.draggable.can-drop div.col-color-first {
+	background-color: red;
+}
+
+.page-planningencours div.blanc-first {
+	background-color: white;
+	height: 25vh;
+}
+
+.page-planningencours div.blanc {
+	background-color: white;
+	height: 20vh;
+}
+
+.page-planningencours h3 {
+	color: #ffa527;
+	padding-top: 7%;
+    font-size: 30px;
+    transition: 1s;
+}
+
+.page-planningencours div.etapes.draggable.can-drop h3{
+	color: red;
+}
+
+.page-planningencours .img-etape {
+	padding-top: 9%;
+}
+
+.page-planningencours .message-ko {
+	display: none;
+}
+
+.page-planningencours .message-ok {
+	margin: 20px auto 0px;
+  	width: 50%;
+  	color: #3a405a;
+  	font-size: 1.4em;
+  	text-align: center;
+}
+
+.page-planningencours .message-ok form label[for="form_duree"] {
+	display: none;
+}
+
+.page-planningencours .message-ok form input#form_duree {
+	display: none;
+}
+
+.page-planningencours .message-ok button {
+	background-color: #ffa527;
+	margin-top: 1%;
+	outline-style: none;
+}
+
+.page-planningencours .message-ok img {
+	margin-left: 36%;
+    margin-top: 5%;
+}
+
+
+
+
+
+
+
+/*** contrat.html.twig ***/
+
+.page-contrat .row.clavier {
+	height: 7vh;
+}
+
+.page-contrat .row#casesJetons {
+	height: 15vh;
+}
+
+.page-contrat #casesEtapes {
+	margin: 20px auto;
+	height: auto;
+}
+
+.page-contrat .etape img {
+	margin: 0 auto;
+}
+
+.page-contrat .jeton div.drop-jeton {
+	margin: 4% auto;
+	/*display: none;*/
+	border: 3px solid yellow;
+    border-radius: 25px;
+    width: 55px;
+    height: 55px;
+}
+
+@media screen and (max-width: 800px){
+	.page-contrat .jeton div.drop-jeton {
+		margin: 4% auto;
+		/*display: none;*/
+		border: 3px solid yellow;
+	    border-radius: 25px;
+	    width: 25px;
+	    height: 25px;
+	}
+}
+
+.page-contrat .jeton div.drop-jeton.fini {
+	background-image: url('../img/contrat/Jeton.png');
+	background-size: 100%;
+}
+
+.page-contrat img.grid {
+	padding-left: 20%;
+	padding-top: 10%;
+	cursor: pointer;
+}
+
+.page-contrat .clavier table.none {
+	display: none;
+}
+
+.page-contrat .clavier table {
+	text-align: center;
+	background-color: white;
+}
+
+.page-contrat .clavier-absolute {
+	position: absolute;
+	right: 2%;
+    top: 1%;
+}
+
+.page-contrat #boutonClavier {
+	outline-style: none;
+}
+
+.page-contrat #new-jeton {
+	margin: 0 auto;
+}
+
+/*.page-contrat #img-jeton {
+	float: right;
+}*/
+
+.page-contrat #modal-body {
+	text-align: center;
+	color: #3a405a;
+}
+
+.page-contrat #modal-body p {
+	font-size: 17px;
+}
+
+.page-contrat #modal-body p.libelle {
+	font-weight: 600;
+	color: #ffa527;
+}
+
+.page-contrat .modal-footer a {
+	text-decoration: none;
+}
+
+.page-contrat .modal-footer .btn {
+	background-color: #ffa527;
+	color: #3a405a;
+}
+
+
+
+
+
+
+
+/*** contrat404.html.twig ***/
+
+.page-contrat404 .message {
+	margin: 20px auto 0px;
+    width: 50%;
+    color: #3a405a;
+    font-size: 1.4em;
+    text-align: center;
+}
+
+.page-contrat404 .message a {
+	text-decoration: none;
+	color: #3a405a;
+}
+
+.page-contrat404 .message button {
+    background-color: #ffa527;
+    margin-top: 1%;
+    outline-style: none;
+}
+
+.page-contrat404 .message img {
+	margin-left: 36%;
+    margin-top: 5%;
+}
+
+
+
+
+
+
+/*** creerPlanning.html.twig ***/
+
+.page-creer-planning .second-titre-page {
+ color: #3a405a;
+}
+
+.page-creer-planning .troisieme-titre-page {
+  color: #3a405a;
+  text-align: center;
+}
+
+.page-creer-planning .form-ajout-seq {
+  font-size: 1.2em;
+  text-align: center;
+}
+
+.page-creer-planning .form-ajout-seq-input {
+  margin-bottom: 10px;
+}
+
+.page-creer-planning #dropzone {
+  min-height: 200px;
+  background-color: rgb(230,230,230);
+  border-radius: 5px;
+  padding: 20px;
+}
+
+.page-creer-planning #dropzone img {
+	width: 80px;
+  height: 80px;
+  background-color: #e0e3f4;
+  box-shadow: 5px 5px 15px 5px #656565;
+  transition:0.4s;
+  padding: 10px;
+}
+
+.page-creer-planning .case-etape {
+  height: 230px;
+  margin-bottom: 20px;
+}
+
+.page-creer-planning .etape {
+  cursor: pointer;
+  background-color: inherit;
+  box-shadow: none;
+  transition:0.4s;
+
+  padding: 20px;
+}
+
+.page-creer-planning .etape p {
+  font-size: 1.2em;
+  text-align: center;
+  height: 50px;
+}
+
+.page-creer-planning .photo-etape {
+  width: 100px;
+  height: 100px;
+  margin: 0px auto 5px;
+}
+
+.page-creer-planning .selected {
+  background-color: #e0e3f4;
+  box-shadow: 5px 5px 15px 5px #656565;
+  transition:0.4s;
+}
+
+.page-creer-planning .in-list {
+  margin: 10px;
+}
+
+.page-creer-planning .indicateurPosition {
+  background-color: #e0e3f4;
+  border-radius: 50px;
+  border: 4px solid #6f7aa9;
+  color: #ffa524;
+  text-align: center;
+  font-weight: bold;
+  font-size: 18px;
+  padding: 5px;
+  width: 45px;
+  height: 45px;
+  position: absolute;
+  right: -10px;
+  z-index: 999;
+  opacity: 0;
+}
+
+.page-creer-planning .indicateurPosition.shown {
+  opacity: 1;
+  transition:0.2s;
+}
+
+
+
+
+
+/*** responsive ***/
+
+@media screen and (max-width: 992px){
+	div .contrat h1, div .planning h1, div .calendrier h1{
+		font-size: 4vh;
+		margin-top: 10vh;
+		text-align: left;
+	}
+}

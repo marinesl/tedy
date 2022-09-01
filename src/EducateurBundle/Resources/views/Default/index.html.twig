@@ -1,0 +1,149 @@
+{% extends 'educateurBase.html.twig' %}
+
+{% block title %} Tableau de bord {% endblock %}
+
+{% block bodyclass %} class="page-index" {% endblock %}
+
+{% block stylesheets %} 
+  <link rel="stylesheet" type="text/css" href="{{ asset('css/fullcalendar.min.css') }}">
+{% endblock %}
+
+{% block body %}
+
+  <div class="row">
+    <div class="col-md-2 col-sm-2 col-xs-2 user-present">
+        {{user}}  |
+
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+    		    <a href="{{ path('fos_user_security_logout') }}">
+    		        {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+    		    </a>
+        {% endif %}
+      </div>
+    </div>
+
+    {% if message is defined %}
+      <div id="message">
+        {{message}}
+      </div>
+    {% endif %}
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 text-left">
+          <h1>
+              Tableau de bord
+          </h1>
+        </div>
+        <div class="col-md-6 text-right">
+          <button type="button" class="btn btn-primary bouton-ajout-enfant">
+             <a href="{{ path('educateur_enfant_ajout') }}">Ajouter un enfant</a>
+          </button>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-md-12 tableau-enfants">
+          <div class="row">
+            {% for enfant in enfants %}
+              <a href="{{ path('educateur_fiche_enfant', {'username': enfant.username, 'name': enfant.name}) }}">
+                <div class="col-md-3 un-enfant">
+                    {% if enfant.photo %}
+                      <img src="{{ asset('uploads/photosEnfant/') }}{{enfant.photo}}" alt="photo de profil de l'enfant" class="photo-profil-enfant img-responsive" />
+                    {% else %}
+                      <img src="{{ asset('img/user/user.png') }}" alt="photo de profil de l'enfant" class="photo-profil-enfant img-responsive" />
+                    {% endif %}
+                    <p>{{ enfant.username }} {{ enfant.name }}</p>
+                </div>
+              </a>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div id="calendar">
+
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="contratModal" tabindex="-1" role="dialog" aria-labelledby="contratModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h2 class="modal-title" id="contratModalLabel"></h2>
+          </div>
+          <div id="modal-body">
+          </div>
+          <div class="modal-footer">
+            <a id="deleteContrat" href="">
+              <button type="button" class="btn btn-danger">Supprimer ce contrat</button>
+            </a>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock body %}
+
+{% block javascripts %}
+  <script type="text/javascript" src="{{ asset('js/moment.min.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('js/fullcalendar.min.js') }}"></script>
+  <script src="{{ asset('js/fr.js') }}"></script>
+  <script type="text/javascript">
+    var colors = ["#ad3a3a", "#3a48ad", "#a13aad", "#3aad98", "#76ad3a", "#794300", "#790000", "#8c8c8c", "#000000"];
+    var enfantsPhoto = document.getElementsByClassName('un-enfant');
+    [].forEach.call(enfantsPhoto, function(enfantPhoto, i) {
+      var enfantNom = enfantPhoto.lastElementChild;
+      enfantNom.setAttribute("style", "color:"+colors[i]);
+    });
+    $(document).ready(function() {
+        $('#calendar').fullCalendar({
+          header:{
+            left:   'month,agendaWeek,agendaDay',
+            center: 'title',
+            right:  'today prev,next'
+          },
+          events: [
+          {% if contrats  %}
+            {% for i in range(0, compteur) %}
+              {% for contrat in contrats[i] %}
+                {
+                  id: '{{contrat.id}}',
+                  enfant: '{{contrat.enfant.username}}',
+                  date:'{{contrat.date | date("Y-m-d H:i")}}',
+                  title: 'Titre : {{contrat.libelle}} {% if contrat.enCours == true %}(en cours){% elseif contrat.fini == true %}(fini){% endif %}',
+                  start: '{{contrat.date | date("Y-m-d H-i-s")}}',
+                  description: '<div class="col-md-12"><h3>Description : {{contrat.description}}</h3></div><div class="clearfix"></div> <div class="col-md-12"><h4>Enfant : {{contrat.enfant.username}}</h4></div><div class="clearfix"></div> <div class="col-md-12"><h4>Date : {{contrat.date | date("Y-m-d H:i")}}</h4></div><div class="clearfix"></div> {% for etape in contrat.sequence.etapes %}<hr><div class="nomEtape col-md-6"> {{ etape }}</div><div class="imageEtape col-md-6"> <img class="img-responsive" src="{{asset("img/etape/")}}{{etape.image}}"/></div><div class="clearfix"></div>{% endfor %}',
+                  className: 'clickable',
+                  color: colors[{{i}}]
+                },
+              {% endfor %}
+            {% endfor %}
+          {% endif %}
+          ],
+          eventRender: function(event, element) {
+              element.attr("data-toggle", "modal");
+              element.attr("data-target", "#contratModal");
+              element.attr("style", "background-color:"+event.color);
+          },
+          eventClick: function(calEvent, jsEvent, view) {
+            var title = calEvent.title;
+            var description = calEvent.description;
+            var modalTitle = document.getElementById("contratModalLabel");
+            modalTitle.innerHTML = title;
+            var modalBody = document.getElementById("modal-body");
+            modalBody.innerHTML = description;
+            var deleteContrat = document.getElementById("deleteContrat");
+            var path = "{{path('educateur_supprimer_contrat', {'id': "PLACEHOLDER"})}}";
+            path = path.replace("PLACEHOLDER", calEvent.id);
+            deleteContrat.setAttribute('href', path);
+
+        }
+
+        })
+
+    });
+  </script>
+{% endblock %}
